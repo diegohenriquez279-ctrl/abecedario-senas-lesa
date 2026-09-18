@@ -1,0 +1,32 @@
+{
+  "name": "abecedario-senas-lesa",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "setup:models": "node scripts/setup-models.mjs",
+    "dev": "vite",
+    "dev:https": "vite --host --mode https",
+    "extractor": "node scripts/extractor-server.mjs",
+    "build": "tsc -p . && vite build",
+    "preview": "vite preview",
+    "build:reference": "tsx tools/extractor/buildReference.ts",
+    "eval": "tsx tools/eval/evaluate.ts"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^1.0.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-basic-ssl": "^2.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "mp4box": "^2.4.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0"
+  }
+}

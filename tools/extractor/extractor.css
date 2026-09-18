@@ -1,0 +1,11 @@
+body { font: 14px/1.4 system-ui, sans-serif; margin: 16px; background: #f4f4f2; color: #222; }
+button { font: inherit; padding: 6px 12px; margin: 2px; cursor: pointer; }
+canvas, video { max-width: 100%; background: #000; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+.log { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 12px; background: #fff; padding: 8px; max-height: 260px; overflow: auto; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.card { background: #fff; padding: 6px; border-radius: 6px; }
+.card canvas { width: 100%; }
+.card.dyn { outline: 2px solid #c27a00; }
+.card.warn { outline: 2px solid #c00; }
+input[type=number] { width: 70px; }

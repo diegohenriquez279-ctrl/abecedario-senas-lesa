@@ -1,0 +1,11 @@
+node_modules/
+dist/
+# Material de referencia con branding: nunca entra al repo ni al deploy
+*.mp4
+*.mov
+Claude outputs/
+# Datos crudos intermedios del extractor (regenerables)
+tools/extractor/out/
+
+# Configuración local de herramientas
+.claude/
