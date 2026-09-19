@@ -1,39 +1,26 @@
-/* Diseño neutro y propio (sin branding). Mobile-first: 360–414 px primero. */
+/* Paleta GameHut (misma que css/minijuego.css del hub): fondo #111, rojo #D32F2F,
+   dorado #fbbf24 para récords, tipografía Inter. Siempre oscuro, como el resto del hub.
+   Mobile-first: 360–414 px primero. */
 :root {
-  --bg: #f4f1ea;
-  --surface: #ffffff;
-  --ink: #1d2733;
-  --muted: #5b6573;
-  --primary: #16324f;
+  --bg: #111111;
+  --surface: #1c1c1c;
+  --surface-hover: #262626;
+  --ink: #ffffff;
+  --muted: #b0b0b0;
+  --primary: #d32f2f;
+  --primary-hover: #b71c1c;
   --primary-ink: #ffffff;
-  --accent: #ffd166;
-  --ok: #23945f;
-  --ok-soft: #dff3e8;
-  --warn: #e3a21a;
-  --bad: #d64545;
-  --line: #e2ddd2;
+  --accent: #fbbf24;
+  --ok: #2e7d32;
+  --ok-soft: #16301b;
+  --warn: #f9a825;
+  --bad: #ef5350;
+  --line: #2a2a2a;
   --radius: 16px;
-  --shadow: 0 2px 10px rgba(22, 50, 79, 0.08);
-  --tile-bg: #16324f;
-  --tile-ink: #ffd166;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111821;
-    --surface: #1a2430;
-    --ink: #eef2f6;
-    --muted: #a3afbd;
-    --primary: #ffd166;
-    --primary-ink: #1a2430;
-    --accent: #ffd166;
-    --ok-soft: #173a2a;
-    --line: #2b3746;
-    --shadow: none;
-    --tile-bg: #22405f;
-    --tile-ink: #ffd166;
-    color-scheme: dark;
-  }
+  --shadow: none;
+  --tile-bg: #d32f2f;
+  --tile-ink: #ffffff;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -41,7 +28,7 @@ html, body { margin: 0; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font: 16px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font: 16px/1.45 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
 }
@@ -71,13 +58,35 @@ h2 { margin: 0; }
 }
 .btn:disabled { opacity: 0.5; cursor: default; }
 .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.btn-primary { background: var(--primary); color: var(--primary-ink); }
-.btn-secondary { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.btn-primary { background: var(--primary); color: var(--primary-ink); transition: background-color 0.2s; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-secondary { background: var(--surface); color: var(--ink); border-color: var(--line); transition: border-color 0.2s, background-color 0.2s; }
+.btn-secondary:hover { background: var(--surface-hover); border-color: var(--primary); }
+
+/* Volver al menú de GameHut (mismo estilo que .mj-btn-volver de los minijuegos) */
+.btn-volver-hub {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 12px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.btn-volver-hub:hover { background: var(--surface); border-color: var(--primary); }
+.btn-volver-hub:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .btn-ghost { background: transparent; color: var(--muted); min-width: 64px; }
 .btn-big { min-height: 56px; font-size: 1.15rem; }
 
 /* ---------- inicio ---------- */
-.screen-inicio { text-align: center; justify-content: center; min-height: 100dvh; }
+.screen-inicio {
+  text-align: center; justify-content: center; min-height: 100dvh;
+  padding-top: calc(64px + env(safe-area-inset-top)); /* espacio para .btn-volver-hub */
+}
 .hero { display: flex; justify-content: center; gap: 10px; margin-top: 8px; }
 .hero-letter {
   width: 56px; height: 56px; border-radius: 14px;
@@ -129,7 +138,7 @@ h2 { margin: 0; }
   min-width: 1.4em; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
 }
 .badge {
-  font-size: 0.7rem; font-weight: 700; color: #7a4d00; background: #ffe7ad;
+  font-size: 0.7rem; font-weight: 700; color: var(--accent); background: rgba(251, 191, 36, 0.14);
   padding: 2px 8px; border-radius: 999px; white-space: nowrap;
 }
 .target-hint { margin: 0; text-align: center; }
@@ -201,7 +210,7 @@ h2 { margin: 0; }
   color: #fff; box-shadow: var(--shadow);
 }
 .result-ok { background: var(--ok); }
-.result-retry { background: var(--warn); }
+.result-retry { background: var(--warn); color: #111111; }
 .result-score { font-size: 3.2rem; font-weight: 800; line-height: 1; }
 .result-label { font-size: 0.9rem; opacity: 0.9; }
 .stats {
@@ -236,9 +245,11 @@ h2 { margin: 0; }
 
 /* récord por puntaje */
 .best-score { margin: 0; text-align: center; font-weight: 600; }
+.best-score strong { color: var(--accent); }
 .new-record {
   margin: 4px auto 0; padding: 6px 16px; border-radius: 999px; font-weight: 800;
-  background: #ffe7ad; color: #7a4d00; animation: pop-in 0.4s ease-out;
+  background: rgba(251, 191, 36, 0.14); color: var(--accent); border: 1px solid var(--accent);
+  animation: pop-in 0.4s ease-out;
 }
 @keyframes pop-in { from { transform: scale(0.6); opacity: 0; } }
 .score-breakdown { margin: 0; text-align: center; color: var(--muted); font-size: 0.95rem; }

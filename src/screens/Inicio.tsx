@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react';
 import { CONFIG } from '../config';
 import type { BestScore } from '../game/record';
 
@@ -7,9 +8,23 @@ interface Props {
   onPractice: () => void;
 }
 
+/** Menú principal de GameHut: el juego vive en /lesa/abecedario/ */
+const HUB_URL = '../../index.html';
+
+/** Igual que volverAlMenu() de los minijuegos: respeta el origen, con respaldo al hub. */
+function volverAlHub(ev: MouseEvent<HTMLAnchorElement>) {
+  if (window.history.length > 1) {
+    ev.preventDefault();
+    window.history.back();
+  }
+}
+
 export function Inicio({ best, onStart, onPractice }: Props) {
   return (
     <main className="screen screen-inicio">
+      <a className="btn-volver-hub" href={HUB_URL} onClick={volverAlHub}>
+        ← Volver al menú
+      </a>
       <div className="hero" aria-hidden="true">
         <span className="hero-letter">A</span>
         <span className="hero-letter">B</span>
