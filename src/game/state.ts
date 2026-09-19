@@ -90,21 +90,33 @@ export interface Score {
   total: number;
   timeUsed: number;
   score: number;
+  /** desglose del puntaje (suman `score`) */
+  hitsPoints: number;
+  speedPoints: number;
   passed: boolean;
 }
 
-/** Puntaje = aciertos (85%) + tiempo restante (15%). Aprobado ≥ 75. */
+/**
+ * Puntaje = aciertos (hasta scoreWeightHits) + bono de rapidez (hasta
+ * scoreWeightTime, escalado por la fracción de aciertos). Aprobado ≥ passScore.
+ */
 export function computeScore(s: GameState): Score {
   const total = s.letters.length || 1;
   const hits = s.results.filter((r) => r === 'ok').length;
+  const hitFrac = hits / total;
   const timeFrac = Math.max(0, s.timeLeft) / CONFIG.roundSeconds;
-  const score = Math.round((hits / total) * CONFIG.scoreWeightHits + timeFrac * CONFIG.scoreWeightTime);
+  const rawHits = hitFrac * CONFIG.scoreWeightHits;
+  const rawSpeed = timeFrac * CONFIG.scoreWeightTime * hitFrac;
+  const score = Math.round(rawHits + rawSpeed);
+  const hitsPoints = Math.round(rawHits);
   return {
     hits,
     misses: total - hits,
     total,
     timeUsed: Math.round(CONFIG.roundSeconds - s.timeLeft),
     score,
+    hitsPoints,
+    speedPoints: score - hitsPoints,
     passed: score >= CONFIG.passScore,
   };
 }

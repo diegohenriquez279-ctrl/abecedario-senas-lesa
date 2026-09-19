@@ -11,9 +11,15 @@ export const CONFIG = {
   /** Semáforo: verde por encima de esta fracción del tiempo, rojo por debajo de la otra. */
   timerGreenAbove: 0.5,
   timerRedBelow: 0.25,
-  /** Puntaje = aciertos * pesoAciertos + fracción de tiempo restante * pesoTiempo (suman 100). */
-  scoreWeightHits: 85,
-  scoreWeightTime: 15,
+  /**
+   * Puntaje 0–100 (ajustable; los dos pesos suman 100):
+   *   aciertos/total × scoreWeightHits
+   *   + tiempo restante/total × scoreWeightTime × aciertos/total   (bono de rapidez)
+   * Con todas las señas bien se llega a 80 y se aprueba aunque se vaya lento; la
+   * rapidez suma hasta 20 puntos, proporcional a los aciertos (saltar rápido no suma).
+   */
+  scoreWeightHits: 80,
+  scoreWeightTime: 20,
   /** Aprobado a partir de este puntaje (0..100). */
   passScore: 75,
   /** Pausa (ms) tras validar una letra antes de pasar a la siguiente. */

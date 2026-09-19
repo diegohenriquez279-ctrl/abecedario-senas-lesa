@@ -1,13 +1,16 @@
 import { CONFIG } from '../config';
 import { computeScore, type GameState } from '../game/state';
+import type { RecordResult } from '../game/record';
 
 interface Props {
   state: GameState;
+  /** resultado del récord de esta ronda (null mientras se calcula) */
+  record: RecordResult | null;
   onRetry: () => void;
   onHome: () => void;
 }
 
-export function Resultado({ state, onRetry, onHome }: Props) {
+export function Resultado({ state, record, onRetry, onHome }: Props) {
   const s = computeScore(state);
   return (
     <main className="screen screen-resultado">
@@ -15,6 +18,15 @@ export function Resultado({ state, onRetry, onHome }: Props) {
         <span className="result-score">{s.score}</span>
         <span className="result-label">puntos</span>
       </div>
+      {record?.isNew && (
+        <p className="new-record" role="status">
+          🏆 ¡Nuevo récord!
+        </p>
+      )}
+      <p className="score-breakdown">
+        Aciertos {s.hitsPoints} + Rapidez {s.speedPoints}
+        {record?.best && !record.isNew && <> · Tu récord: {record.best.puntos}</>}
+      </p>
       <h1>{s.passed ? '¡Aprobado!' : '¡Casi! Seguí practicando'}</h1>
       <p className="subtitle">
         {state.timedOut

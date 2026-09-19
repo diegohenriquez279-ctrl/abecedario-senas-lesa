@@ -1,11 +1,13 @@
 import { CONFIG } from '../config';
+import type { BestScore } from '../game/record';
 
 interface Props {
+  best: BestScore | null;
   onStart: () => void;
   onPractice: () => void;
 }
 
-export function Inicio({ onStart, onPractice }: Props) {
+export function Inicio({ best, onStart, onPractice }: Props) {
   return (
     <main className="screen screen-inicio">
       <div className="hero" aria-hidden="true">
@@ -20,10 +22,16 @@ export function Inicio({ onStart, onPractice }: Props) {
         <li>Vas a ver una letra y un dibujo de cómo se hace.</li>
         <li>Hacé la seña frente a la cámara, con cualquier mano, y sostenela.</li>
         <li>
-          Tenés {CONFIG.roundSeconds} s para {CONFIG.roundSize} letras. Si una se complica, saltala.
+          {CONFIG.roundSize} letras en {CONFIG.roundSeconds} s: mientras más rápido y preciso, más puntos.
         </li>
-        <li>Aprobás con {CONFIG.passScore} puntos o más.</li>
+        <li>Aprobás con {CONFIG.passScore} puntos. ¡Superá tu récord!</li>
       </ol>
+
+      {best && (
+        <p className="best-score">
+          🏆 Tu récord: <strong>{best.puntos}</strong> puntos
+        </p>
+      )}
 
       <button className="btn btn-primary btn-big" onClick={onStart}>
         Comenzar

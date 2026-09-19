@@ -23,6 +23,27 @@ bien, con feedback inmediato y amable sobre qué corregir.
 - **Evaluación offline** (`npm run eval`) — mide aciertos y falsos positivos
   sobre el video, con mano derecha, izquierda y "otras personas" simuladas.
 
+## Puntaje y récord
+
+- **Puntaje 0–100** = aciertos (hasta 80) + bono de rapidez (hasta 20). El bono
+  es `tiempo restante / tiempo total × 20 × aciertos / letras`: con los mismos
+  aciertos, más rápido da más puntos, y saltar letras rápido no suma. Con las 6
+  señas bien se llega a 80 y se aprueba (`passScore` 75) aunque se vaya lento.
+  Pesos ajustables en `src/config.ts` (`scoreWeightHits`, `scoreWeightTime`).
+- **Récord = mejor puntaje** (no tiempo). Al terminar cada ronda se guarda en
+  `localStorage` solo si supera al anterior (un empate no lo reemplaza):
+
+  ```
+  clave: gamehut_score_lesa-abecedario
+  valor: { "puntos": 92, "fecha": "2026-09-19T01:20:00.000Z" }
+  ```
+
+  `puntos` es un entero 0–100 y `fecha` el momento (ISO) en que se logró. Es el
+  contrato que leerá el hub de GameHut: no renombrar la clave ni usar `score` o
+  `record` dentro del objeto. Lectura y escritura están protegidas con
+  `try/catch` (en incógnito el récord dura mientras la ventana privada esté
+  abierta). Código: `src/game/record.ts`. La práctica libre no guarda récord.
+
 ## Privacidad
 
 Todo corre en el navegador. **La cámara se procesa 100 % en el dispositivo:

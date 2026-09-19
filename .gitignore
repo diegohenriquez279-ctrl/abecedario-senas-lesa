@@ -9,3 +9,6 @@ tools/extractor/out/
 
 # Configuración local de herramientas
 .claude/
+
+# Backups locales antes de cambios
+.backup/

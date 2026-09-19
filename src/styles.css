@@ -233,3 +233,12 @@ h2 { margin: 0; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
 .gallery-item { margin: 0; background: var(--surface); border-radius: 12px; padding: 8px; text-align: center; }
 .gallery-item .hand-hint { margin: 0 auto; }
+
+/* récord por puntaje */
+.best-score { margin: 0; text-align: center; font-weight: 600; }
+.new-record {
+  margin: 4px auto 0; padding: 6px 16px; border-radius: 999px; font-weight: 800;
+  background: #ffe7ad; color: #7a4d00; animation: pop-in 0.4s ease-out;
+}
+@keyframes pop-in { from { transform: scale(0.6); opacity: 0; } }
+.score-breakdown { margin: 0; text-align: center; color: var(--muted); font-size: 0.95rem; }
